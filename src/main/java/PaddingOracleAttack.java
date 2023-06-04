@@ -3,12 +3,24 @@ import it.exploit.socket.Connection;
 import java.util.Arrays;
 
 public class PaddingOracleAttack {
+    /**
+     *
+     * @param blockIndex index of the binary block. every block is 16 long
+     * @param ciphertext the binary array that the block has to be extracted from
+     * @return the start of the block to the end of the next block
+     */
 
     public static byte[] getBlock(int blockIndex, byte[] ciphertext) {
         int start = blockIndex * 16;
         int end = (blockIndex + 1) * 16;
         return Arrays.copyOfRange(ciphertext, start, end);
     }
+
+    /**
+     *
+     * @param ciphertext gets all the single block from the given byte array
+     * @return all the single blocks in an array of blocks
+     */
     public static byte[][] getAllBlocks(byte[] ciphertext) {
         int numBlocks = ciphertext.length / 16;
         byte[][] allBlocks = new byte[numBlocks][];
@@ -18,6 +30,11 @@ public class PaddingOracleAttack {
         return allBlocks;
     }
 
+    /**
+     * @param args is ignored and not used
+     * sets up connection to the server and writes it
+     */
+    
     public static void main(String[] args) {
         String ipAddress = "10.10.30.38";
         int port = 7007;
